@@ -424,7 +424,7 @@ int main(int argc, char const *argv[]) {
 	double low = 0.1;
 	double increment = 0.1;
 
-	int steps_per_walk = 1000000;
+	int steps_per_walk = 100000;
 	int steps_between_swaps = 100;
 	int max_flips = 1;
 	int lattice_size = 4;

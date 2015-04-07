@@ -78,7 +78,7 @@ void printLattice(const int* const* const* lattice, int lattice_size) {
 
 void walk(int steps, int steps_between_swaps, int flips_per_iteration, double k_times_T, int lattice_size, std::promise<double*>* result_promise, Simulator* sim) {
 
-	// 3D array of int*s, initially all up
+	// 2D array of int*s, initially all up
 	// 1 is up, -1 is down
 	// note: all edges are pointers to the same ints represented by the opposite edge
 	// corners are NOT initialized
@@ -105,7 +105,7 @@ void walk(int steps, int steps_between_swaps, int flips_per_iteration, double k_
 	// printLattice(lattice, lattice_size);
 
 	// potential
-	int U = -4 * lattice_size * lattice_size;
+	int U = -2 * lattice_size * lattice_size;
 	int U_total = 0;
 	// number of up-spin particles
 	int num_up = lattice_size * lattice_size;

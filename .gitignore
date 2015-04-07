@@ -1,3 +1,4 @@
 *.dat
 ising/ising
+*.pyc
 

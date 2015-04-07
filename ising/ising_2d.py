@@ -1,7 +1,5 @@
 import numpy as np
 import math
-import matplotlib.pyplot as plt
-import matplotlib.pylab as plab
 import Tkinter
 import threading
 
@@ -127,24 +125,6 @@ def simulate(k_T_values, lattice_size, gui = None):
 		magnetizations.append(magnetization)
 	return energies, magnetizations
 
-def plot(filename):
-	data_file = open(filename)
-	data = map(str.split, data_file.read().split("\n"), " ")[:-1]
-	data_file.close()
-	temps = list(float(i[0]) for i in data)
-	energies = list(float(i[1]) for i in data)
-	magnetizations = list(float(i[2]) for i in data)
-
-
-	plt.subplot(2, 1, 2)
-	plt.plot(temps, energies)
-	plt.ylabel("Energy")
-	plt.subplot(2, 1, 1)
-	plt.plot(temps, magnetizations)
-	plt.ylabel("Magnetization")
-	plt.xlabel("Temperature (k * T / epsilon)")
-	plt.show()
-
 def temp_range(low, high, increment = 1):
 	temps = []
 	while low < high:
@@ -173,4 +153,5 @@ if __name__=="__main__":
 		data_file.write("%f %f %f\n"%(temps[i], energy_distribution[i], magnetization_distribution[i]))
 	data_file.close()
 
-	plot("ising_2d.dat")
+	import ising_plotter
+	ising_plotter.plot("ising_2d.dat")

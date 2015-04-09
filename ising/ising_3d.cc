@@ -15,8 +15,8 @@ std::uniform_real_distribution<double> distribution(0.0, 1.0);
 // holds data passed to and returned from swapTemps function
 struct WalkData {
 	double T;
-	int U_total;
-	int magnetization_total;
+	long U_total;
+	long magnetization_total;
 };
 
 // Simulator class declaration
@@ -124,17 +124,17 @@ void walk(int steps, int steps_between_swaps, int flips_per_iteration, double k_
 		}
 	}
 
-	std::cout << "printing:" << std::endl;
-	printLattice(lattice, lattice_size);
+	// std::cout << "printing:" << std::endl;
+	// printLattice(lattice, lattice_size);
 
 	// potential
 	int U = -3 * lattice_size * lattice_size * lattice_size;
-	int U_total = 0;
+	long U_total = 0;
 	// number of up-spin particles
 	int num_up = lattice_size * lattice_size * lattice_size;
 	// magnetization
 	int magnetization = lattice_size * lattice_size * lattice_size;
-	int magnetization_total = 0;
+	long magnetization_total = 0;
 
 	// counter to measure when to flip temperatures
 	int current_run_counter = 0;
@@ -221,15 +221,20 @@ void walk(int steps, int steps_between_swaps, int flips_per_iteration, double k_
 		}
 
 		// debugging
-		printLattice(lattice, lattice_size);
-		std::cout << num_up << " " << U << " " << magnetization << std::endl;
+		// printLattice(lattice, lattice_size);
+		// std::cout << num_up << " " << U << " " << magnetization << std::endl;
 
+		// throw out first steps/2 data points
+		if (step == steps / 2) {
+			U_total = 0;
+			magnetization_total = 0;
+		}
 		// add values into running totals
 		U_total += U;
 		magnetization_total += abs(magnetization);
 	}
 
-	printLattice(lattice, lattice_size);
+	// printLattice(lattice, lattice_size);
 
 	//clean up
 	delete[] lattice[0];
@@ -453,14 +458,14 @@ WalkData Simulator::swapTemps(int U, WalkData data) {
 int main(int argc, char const *argv[]) {
 
 	// constants
-	int num_of_temps = 1;
-	double low = 100;
+	int num_of_temps = 100;
+	double low = 0.1;
 	double increment = 0.1;
 
-	int steps_per_walk = 100000;
-	int steps_between_swaps = 10000000;
+	int steps_per_walk = 10000000;
+	int steps_between_swaps = 1000000000;
 	int max_flips = 1;
-	int lattice_size = 3;
+	int lattice_size = 16;
 	
 	// set up temperature arguments
 	double temps[num_of_temps];
